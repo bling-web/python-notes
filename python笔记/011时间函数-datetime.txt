@@ -1,0 +1,87 @@
+
+   datetime主要分为三块.
+  
+一.date,time,datetime
+     1.date类型.
+        (1)导入.
+             from datetime import date     #此时可以直接使用date模块.
+             import datetime                      #此时需要通过datetime.date使用.
+        (2)常用操作.
+            today() 函数.  返回一个date类型的对象.包括年月日这些信息.   我们也可以直接创建一个date对象-->date(2020,5,15)
+            例:
+               >>> d=date.today()
+               >>> d
+               datetime.date(2020, 5, 15)
+               >>> type(d)
+              <class 'datetime.date'>
+              date类型有一些属性,可以直接获取.
+              d.year-->2020
+              d.month-->5
+              d.day-->15
+          d.weekday()   返回该日期是星期几,0是星期一.
+          d.isoweekday()  ISO标准的星期,1是星期一 ,用的更多.
+          d.timetuple()   将d这个date对象转为结构体时间
+          d.fromtimestamp("时间戳")  将时间戳转为date对象
+    2.time类型.
+       (1)导入.
+           from datetime import time
+       (2)常用操作.
+            >>> t=time(19,13,5,12)      #创建一个time对象
+            >>> t.hour
+            19
+            >>> t.minute
+            13
+            >>> t.second
+            5
+            >>> t.microsecond
+            12
+           
+           暂时没感觉这个有什么用.
+       3.datetime类型.---------------------------------最常用.
+          (1)导入
+              from datetime import datetime
+          (2)常用操作.
+              d=datetime.now()  返回一个datetime对象,包括年月日,时分秒这些信息.可以通过属性单独获取.
+              例:
+                  >>> datetime.now()
+                  datetime.datetime(2020, 5, 15, 19, 37, 2, 549031)
+              d.date()     返回一个date对象
+              d.time()     返回一个time对象
+              d.timetuple() 将d这个datetime对象转为结构体时间
+              d.fromtimestamp("时间戳")  将时间戳转为datetime对象
+
+
+二.timedelta.时间区间.
+    1.导入
+       from datetime import timedelta
+    2.常用操作.
+       获取两个时间节点的时间段
+         举例一
+                  d1=datetime.now()
+                  d2=date(2020,5,20)
+                  d3=time(13,14)
+                  d4=datetime.combine(d2,d3)
+                  d4-d1
+                  datetime.timedelta(days=4, seconds=53071, microseconds=202704)   #其中属性为days为相差天数,seconds为不足一天的秒数,microseconds为不足一秒的微妙数.
+      创建一个时间区间,来表示将来的某个时间.
+            t1=timedelta(days=1,hours=15,minutes=24)       #里面可以传入各种参数,按格式就好,weeks:周数,days:天数,hours:小时,minutes:分钟,seconds:秒钟,milliseconds:毫秒数,microseconds:微妙数
+            tomorrow=t1+datetime.now()
+            tomorrow
+
+
+
+三.tzinfo,timezone  时区信息.
+    
+  
+
+四.calendar模块.
+    1.导入.
+       import calendar
+    2.常用操作.
+       import calendar
+       calendar.weekday(year=2020,month=5,day=15)   #判断某一天是星期几,0是星期一
+       4
+       calendar.isleap(2020)   #判断是否为闰年
+       True
+       calendar.monthrange(year=2020,month=5)           #判断某个月第一天是星期几,总共有多少天.
+       (4, 31)

@@ -1,0 +1,39 @@
+一.关于time的时间函数.import time
+     1.获取当前时间戳.
+        time.time()-->1589510426.6138976  可以精确到毫秒.
+     2.获取结构体时间
+        time.localtime()    #默认获取当前时间的,也可以传入时间戳获取当前时间戳
+        time.struct_time(tm_year=2020, tm_mon=5, tm_mday=15, tm_hour=10, tm_min=40, tm_sec=47, tm_wday=4, tm_yday=136, tm_isdst=0)
+        tm_wday=4: 一周中的第几天
+        tm_yday=136:一年中的第几天
+     3.获取格式化时间
+       (1)获取自定义的格式化时间
+         time.strftime('对应格式%',localtime) 
+         %Y:完整年份  %b:月份   %d:日期   %H:24小时  %l:12小时  %p:am/pm  %M:分钟 %S:秒	
+         举例:
+            >>> cur=time.localtime()                #获取当前时间的localtime,结构体时间
+            >>> time.strftime('%Y %b %d %H:%M',cur)
+            '2020 May 15 10:51'
+            >>> tim=time.strftime('%Y %b %d %H:%M',cur)
+            >>> help=tim.split(" ")                  #转为列表
+            >>> help
+            ['2020', 'May', '15', '10:51']
+            >>> res=help[0]+'年'+help[1]+'月'+help[2]+'日'+help[3]
+            >>> res
+            '2020年May月15日10:51'
+            >>> res.replace('May','5')
+            '2020年5月15日10:51'
+        (2)直接获取常见固定格式的格式化时间
+            time.ctime()
+            'Fri May 15 11:25:13 2020'
+      
+     4.将格式化时间转为结构体时间.
+        time.strptime('格式化时间','对应格式')
+        举例:
+            cur=time.localtime()                #获取当前时间的localtime,结构体时间
+            tim=time.strftime('%Y %b %d %H:%M',cur)
+            time.strptime(tim,'%Y %b %d %H:%M')
+     5.结构提时间转换为时间戳.
+        time.mktime("localtime")
+       
+     

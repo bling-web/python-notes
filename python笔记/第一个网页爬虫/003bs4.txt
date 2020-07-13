@@ -1,0 +1,97 @@
+from bs4 import BeautifulSoup
+encoding='utf-8'
+
+一. 总共可以分为四部分
+     1.Tag 标签
+     2.NavigableString  标签里面包含的string
+     3.BeautifulSoup    bs这个对象,包含整个文档
+     4.Comment 注释部分,特殊的NavigableString
+
+     file=open('./注册综合案例.html','r+b')
+     html = file.read()   #将文件内容解析成二进制文件,返回一个二进制文件对象
+     bs=BeautifulSoup(html,"html.parser")   #传入需要解析的内容,然后指定解析器,返回一个bs对象
+
+
+    以下除了第三部分都是默认打印第一个中的内容
+
+二.第一部分Tag
+    print(bs.head)
+    print(bs.title)  #打印对应标签以及标签里面的内容
+
+
+
+三.第二部分NavigableString
+    print(bs.title.attrs)   #只打印标签里的内容,会过滤注释掉的内容
+
+
+三.第三部分BeautifulSoup
+    print(bs)              #打印所有的标签及其内容
+
+
+四.第四部分Comment
+    print(bs.title.string)   #只打印标签里的内容,会显示注释掉的内容
+
+五.文档遍历.
+     通过包装某个标签下的所有内容,返回一个list,然后进行遍历.
+     bs.body.contents
+      
+      通过contents就可以返回一个list.
+      然后就可以进行list的操作.
+
+六.文档搜索.
+      其实也就几部分内容：
+         标签，属性，文本，正则表达式
+
+    1.标签.
+       print(bs.find_all('td'))   #找出所有完全匹配td的标签及其内容
+       print(bs.find_all('td'，limit=3))   #找出前三个td标签极其内容
+    2.正则表达式
+       print(bs.find_all(re.compile('td')))  #找出所有模糊匹配td(还含有td就可以)的标签及其内容
+       print(bs.find_all(re.compile('input')))
+    3.输入函数,根据函数的要求来搜索.
+       def name_is_exists(tag):
+            return tag.has_attr("name")
+       print(bs.find_all(name_is_exists))  #找出所有包含name字符串的标签
+    4.属性
+       print(bs.find_all(id='test'))
+       print(bs.find_all(class_="t"))
+       print(bs.find_all(href="ww"))
+       print(bs.find_all(placeholder='请输入用户名'))
+       这个不能输入name进行查询
+
+    5.文本
+       text参数-------只找到对应文本
+           print(bs.find_all(text='wangliangliang'))      #暂时发现这个text文本不能搜索table标签里面的内容
+       给出一个列表
+           print(bs.find_all(text=['wangliangliang','wang']))  
+       正则表达式
+           print(bs.find_all(text=re.compile("验证码")))   #用正则可以搜索到table标签里面的内容
+           print(bs.find_all(text=re.compile("\\w{0,10}")))  #js的正则表达式
+
+     可以进行组合查询bs.find_all('div',class_='item'):比如这样.
+
+
+    6.css选择器
+       (1)标签
+           print(bs.select("img"))
+           print(bs.select("input"))
+
+       (2)id
+           print(bs.select('#注册表'))
+
+       (3)class
+            print(bs.select('.t'))
+
+       (4)精确查找
+            print(bs.select("input[type='radio']"))
+            print(bs.select("div span"))  #父子关系div中的所有span
+            print(bs.select("div>span"))  #父子关系div中的直属子级span
+            print(bs.select("input ~ div"))  #兄弟关系,和input同一层级的div
+
+
+       (5)只显示文本
+            help=bs.select("input ~ div")
+            print(help[0].get_text())
+    
+
+     

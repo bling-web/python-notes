@@ -1,0 +1,68 @@
+一.JSON数据格式和python的对应关系.
+                   JSON                       python
+    {}             对象                           字典
+    []             数组                            列表
+    ""         字符串plus                   字符串
+    可以看到JSON数据格式和python中的数据结构一一对应,所以用python处理就非常方便.
+
+二.JSON格式的操作
+    需要用到JSON模块   
+    import JSON
+    1.将python格式数据转为JSON格式.
+       json.dumps(date)
+      例:
+         >>>date
+         {'韩信': '刺客', '张飞': '坦克', '列表': [1, 2, 3]}
+         >>>help=json.dumps(date)                           #将date数据转为json格式
+         >>>help
+         '{"\\u97e9\\u4fe1": "\\u523a\\u5ba2", "\\u5f20\\u98de": "\\u5766\\u514b", "\\u5217\\u8868": [1, 2, 3]}'       #这里出现了乱码,可以使用json.dumps(date,ensure_ascii=False)就可以消除乱码，ensure_ascii默认是True
+         >>>with open("E:/test.txt",'w') as f:               #这里不知道为什么一定要用/,不能用\,否则会报错.
+                    f.write(help)
+         ...
+         91
+
+    2.直接将数据写入文件,以json格式进行保存.
+       json.dump("原始数据",文件对象)
+      例:
+           >>>date
+           {'韩信': '刺客', '张飞': '坦克', '列表': [1, 2, 3]}
+           >>>with open("E:/t.txt",'w') as f:
+                       json.dump(date,f)                                #将数据格式转为json并写到某个文件中.
+
+    3.将JSON格式转为python格式.
+       json.loads('json数据')	
+      例:
+        >>> date
+       {'韩信': '刺客', '张飞': '坦克', '列表': [1, 2, 3]}
+       >>> help
+       '{"\\u97e9\\u4fe1": "\\u523a\\u5ba2", "\\u5f20\\u98de": "\\u5766\\u514b", "\\u5217\\u8868": [1, 2, 3]}'
+       >>> json.loads(help)                                 #将json格式转为python格式.
+       {'韩信': '刺客', '张飞': '坦克', '列表': [1, 2, 3]}
+
+    4.直接从文件中读取json格式,并转为python格式.
+       json.load('文件对象')
+       例:
+         >>> with open("E:/t.txt") as f:
+         temp=json.load(f)
+         >>> temp
+         {'韩信': '刺客', '张飞': '坦克', '列表': [1, 2, 3]}
+
+
+      对于dumps()函数和loads()函数,有一些常用的参数.
+      1.ensure_ascii  
+          默认为True,当有乱码格式问题时,可以设置为ensure_ascii=False.
+      2.indent,缩进,
+         默认为None,可以设置indent=4  来使数据格式更加美观.就是会首行缩进四个字符.
+      3.separators,分隔符,
+         包含元素分隔符和对象键值分隔符.默认的元素分隔符是逗号+空格,默认的对象分隔符是冒号+空格.我们可以自定义
+         举例:
+             >>> json.dumps(date,ensure_ascii=False,separators=(',',':'))       #第一个是元素分隔符,设置为逗号,第二个是对象分隔符,设置为冒号.
+             '{"韩信":"刺客","张飞":"坦克","列表":[1,2,3]}'
+             >>> json.dumps(date,ensure_ascii=False)
+             '{"韩信": "刺客", "张飞": "坦克", "列表": [1, 2, 3]}'
+     
+            很明显,通过以上设置,我们可以将json数据变得更加紧凑.
+
+       
+
+

@@ -1,0 +1,65 @@
+一.模拟get和post请求.
+
+    1.模拟一个get请求
+       head={'User-Agent':"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.138 Safari/537.36"}
+
+       request=urllib.request.Request("https://movie.douban.com/top250",headers=head)   #返回一个request对象,为了设置User-Agent,在封装request对象的时候还可以指定data(携带数据),method(请求方式)等等
+       reponse=urllib.request.urlopen(request)   #模拟浏览器访问请求,将所有的返回数据封装到reponse对象
+       print(reponse.read().decode('utf-8'))    #reponse.read()是返回数据,但是有点类似乱码,必须解码一下
+
+
+     2.模拟一个post请求
+        date=bytes(urllib.parse.urlencode({'username':'wang','password':123}),encoding='utf-8') #构造表单数据,然后转换成二进制数据,因为所有的数据在网页上传输都是二进制
+        reponse=urllib.request.urlopen("http://httpbin.org/post",data=date)   #httpbin.org是一个专门测试request和response的网页,后面加上post就是以post形式提交
+        print(reponse.read().decode('utf-8'))
+
+二.超时问题.
+    在实际爬取中可能会超时,所以需要对超时进行设置和处理.
+    举例:
+          request=urllib.request.Request("https://movie.douban.com/top250",headers=head)   #返回一个request对象,为了设置User-Agent
+          try:
+              reponse=urllib.request.urlopen(request,timeout=0.01)   #模拟浏览器访问请求,将所有的返回数据封装到reponse对象,  这里设置了超时时间,并且对超时异常进行了捕获.
+              print(reponse.read().decode('utf-8'))    #reponse.read()是返回数据,但是有点类似乱码,必须解码一下
+         except urllib.error.URLError as e:
+              print(e)
+
+
+三.响应头.
+     urlopen()该方法返回的对象包含了一次请求的所有的信息,可以进行单独获取.
+     比如获取
+                reponse.getheaders()  #获取所有的相应头
+               reponse.getheader('Content-Type')    #获取某一个具体的响应头
+
+
+四.url中英文混合得问题.
+     Python3 出现'ascii' codec can't encode characters问题 ,当使用urllib.request.urlopen打开包含中文的链接时报错：
+     例:
+        from urllib import request
+        url = 'https://baike.baidu.com/item/华为'
+        response = request.urlopen(url)
+ 
+        提示错误：UnicodeEncodeError: ‘ascii’ codec can’t encode characters in position 10-12: ordinal not in range(128)
+
+        参考https://www.zhihu.com/question/22899135 和https://blog.csdn.net/sijiaqi11/article/details/78449770 得知，
+        urllib.request.urlopen不支持中英文混合的字符串。
+        应使用urllib.parse.quote进行转换。
+     正确做法如下:
+       #coding=utf-8
+        from urllib import request
+        from urllib.parse import quote
+        import string
+
+        url = 'https://baike.baidu.com/item/华为'
+        s = quote(url,safe=string.printable)
+        response = request.urlopen(s)
+
+
+
+有时候打开一个url会重定向,就是访问的url不是最终的url,这个时候我们想获取最终的url.可以这样.
+    reponse = urllib.request.urlopen(newUrl)
+    print(reponse.geturl())
+
+
+	
+查看返回状态码
+  reponse.getcode()

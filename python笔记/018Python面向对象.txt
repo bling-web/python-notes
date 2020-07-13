@@ -1,0 +1,42 @@
+一.类定义.
+    class ClassName:        #类名
+        def __init__(self):     #构造方法,init就是类的构造方法,在构造类实例时就会自动执行
+            
+       
+二.类的方法
+    在类内部的方法和一般函数的区别是,类方法必须包含一个默认参数,且为第一个参数,就是代表类的实例,一般命名为self.也就是this.
+
+
+
+举例:
+    class person:
+        name=''
+        age=0
+        _weight=0                             #__私有属性,外部不能访问,可以通过类似get/set方法
+        def __init__(self,name,age):    $self就代表当前对象,类似于this
+            self.name=name
+            self.age=age
+
+        def test(self):
+            print("当前对象是: {}".format(self))
+            print("我叫{},我今年{}岁,我正在成长".format(self.name,self.age))
+
+
+
+    per=person("小王",18)
+    per.test()
+
+运行结果:
+    当前对象是: <__main__.person object at 0x00000187D4BF5430>
+    我叫小王,我今年18岁,我正在成长
+
+三.类的私有属性和私有方法.
+     以双下划线开头的属性是私有属性,没有下划线是公有属性.
+     以双下划线开头的方法是私有方法
+三.类的继承
+    python支持多继承.格式如下:
+      class child(base1,base2) :       
+      括号中的类就表示继承类
+   
+
+    

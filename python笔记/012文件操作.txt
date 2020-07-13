@@ -1,0 +1,113 @@
+1.基础知识.
+   Windows和Mac系统中的文件系统路径不区分大小写.
+    Linux是区分大小写的.
+    所以路径建议还是都用小写.
+
+2.文件的模式.
+   不论是文件的读还是写操作,都有对应的模式,如果不声明,则默认以只读模式打开.
+   'r'  : 只读模式,不允许写.
+   'w': 只写模式,不允许读,这种写操作会覆盖掉原先的内容.
+   'r+':既可以读也可以写.
+   'a': 写操作的一种,追加操作,在原先文件内容下进行追加.
+   'b': 二进制文件,当需要对非文本,比如说图片,视频等进行操作时,需要加上该模式
+  
+   open()打开会返回一个文件对象,在这里我们可以指定打开的编码方式,encoding='utf-8'
+    
+
+一.读取文件.
+    1.readlines()函数读取文本文件.
+       >>>f=open("E:\python\循环小技巧.txt")            #返回一个文件对象
+       >>>for i in f.readlines():                                     #readLine()函数读取整个文件,并按行分割,返回一个列表
+                  print(i,end=" ")                                        #end是避免打印多余的换行.
+       >>>f.close()
+     
+       注意:每次都需要去关闭文件资源对象,实际操作中可能会忘掉,我们可以使用with来帮助我们自动关闭文件对象.
+         所以上述代码通常写成如下:
+        with open("E:\python\循环小技巧.txt") as f:
+            for i in f.readlines():
+                print(i,end=" ")                   #在with这个结构结束后自动关闭.
+    2.readline()函数读取文本文件
+      有readlines()函数也就有readline()函数,所以只读取一行,每次会自动读取下一行.用readline()函数读取如下代码所示.
+         with open("E:\python\循环小技巧.txt") as f:
+             while True:
+                 l=f.readline()
+                 if len(l)==0:
+                     break
+                else:
+                    print(l)
+     3.文件指针
+        为什么每次能够准确地读取下一行呢?因为有文件指针的概念.
+        >>> f=open("E:\python\循环小技巧.txt")
+        >>> f.tell()      #使用tell函数查看当前文件指针的位置,默认为0
+         0
+         >>> f.readline()
+          '--------选出一个特定条件的数(python格式)      continue相当于跳的功能\n'
+         >>> f.tell()
+         70
+         >>> f.seek(10)   #使用seek()函数修改文件指针的位置
+         10
+         >>> f.tell()
+         10
+         >>> f.readline()
+         '出一个特定条件的数(python格式)      continue相当于跳的功能\n'       
+     4.read()
+        一下子读取整个文件,返回一个字符串
+     
+     以上read()函数都支持可选参数,就是一次读取的最大字符,直接在括号中输入即可.
+
+
+二.写入文件.
+    1.writeLines()  列表按行写入文件.
+      这个函数并不会自动为每行添加换行符.
+      这里以复制一个文本文件为例.	
+          with open("E:\python\循环小技巧.txt",'r') as read:               #后面的参数'r'是默认以只读模式打开,如果不加则默认就是只读模式,不允许进行写操作
+              with open("E:\python\copy1.txt",'w') as write:                #在只写模式下,即使不存在对应文件也会自动创建,如果有读模式则不能自动创建,'w'以只写模式打开
+                  temp=read.readlines()                                                   如果是文件夹不存在则会报错.
+                  write.writelines(temp)
+      复制一个图片的案例.
+          with open("E:\java笔记\java微职位\java图解\mybatis.png",'r+b') as read:    #区别就是所有的二进制文件都要加上b模式.
+              with open("E:\python\copy1.png",'w+b') as write:
+                  temp=read.readlines() 
+                  write.writelines(temp)
+    2.write()
+      文件对象.write("写入内容")      该函数会返回写入的字符数.
+  
+    注意:写入的内容会先在缓冲区中,如要写入磁盘可以flush()或者close()
+
+
+三.文件目录相关操作.
+     需要用到OS模块中的内容
+    1.判断文件目录是否存在.
+      os.path.exists("文件路径")	
+      注意文件路径结尾要以\\,否则python认为该路径没有结束.
+    2.创建一个目录.
+       os.makedirs("文件路径")
+       此时,只有当该文件路径不存在才可以,否则会报错
+       
+       那么,可以通过指定参数exist_ok=True,使其变得更加智能,如果不存在则创建,存在也不会报错.
+       os.makedirs("文件路径",exist_ok=True)
+    小例子:
+       >>> os.path.exists("F:\test\s\\")
+       False
+       >>> os.makedirs("F:\\test\s\\")
+       >>> os.makedirs("F:\\test\s\\")
+       Traceback (most recent call last):
+          File "<stdin>", line 1, in <module>
+          File "C:\Users\tim\AppData\Local\Programs\Python\Python38\lib\os.py", line 223, in makedirs
+          mkdir(name, mode)
+          FileExistsError: [WinError 183] 当文件已存在时，无法创建该文件。: 'F:\\test\\s\\'
+       >>> os.makedirs("F:\\test\s\\",exist_ok=True)
+     3.判断文件是否存在.
+        os.path.isfile("F:\python\program\question.txt")
+        此时不论是路径错误还是文件名错误都会返回false
+       
+
+
+
+
+
+
+
+
+      
+   

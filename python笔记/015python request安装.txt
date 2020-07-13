@@ -1,0 +1,12 @@
+1.直接执行pip install requests
+   这个如果有vpn直接执行就好,但是如果没有vpn可能会出现问题.
+
+
+2.另一种安装方式
+   1.打开网页.
+      http://www.lfd.uci.edu/~gohlke/pythonlibs    该网站有python的所有第三方工具包
+   2.ctrl+f 搜索requests
+      找到类似与request-2.6.0-py2.py3-none-any.whl的包,然后下载
+   3.下载之后将后缀名.whl改为.zip
+   4.进行解压
+   5.解压之后将requests文件夹拷贝到python安装目录下的Lib文件夹中.

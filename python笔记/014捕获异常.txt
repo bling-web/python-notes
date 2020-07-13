@@ -1,0 +1,42 @@
+1.捕获异常格式.
+   try:
+   
+   except 异常名称:
+
+   finally:
+
+
+2.小案例. except捕获不同异常,并进行不同处理.
+   try:
+       guess=int(input("输入一个整数: "))
+   except ValueError:                            #except有对应异常时执行
+        print("输入错误,请您再试一次")
+   except KeyboardInterrupt:
+        print("输入中断")
+    else:
+         print("输入正常")                         #else就是正常输入之后执行
+    finally:
+         print("这句话总是会执行")           #finally不管怎样都会执行
+
+
+3.补充说明:
+   (1)我们可以同时用except捕获多种不同类型的异常,
+           如except(XXXError,YYYError,ZZError)
+          
+         如果后面不进行声明则默认捕获所有异常,不推荐这样做.
+           except:
+
+   (2) 也可以使用as关键字将异常赋值给变量.
+         例:
+             try:
+                 int(input("请输入一个整数:"))
+            except (ValueError,KeyboardInterrupt) as exce:
+                print("输入中断")
+                print(exce)
+             运行结果:
+                E:\python\program>python tryException
+                请输入一个整数:da
+                输入中断
+                invalid literal for int() with base 10: 'da'
+
+          

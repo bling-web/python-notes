@@ -1,0 +1,84 @@
+一.字典.dict
+     就像java里的hashmap中一样,区别是里面可以放任意类型的元素.
+     相同的是元素唯一且无序,底层原理应该是一样的.
+     1.创建方式.
+        {key:value,key1:value1}
+     2.访问方式.没有索引的概念,只能通过key来访问.
+           dic={'a':1,'b':2}
+           dic['a']-->1
+        可以使用关键字in查看是否存在某个key.但是不能查看value.
+           'a' in dic
+     3.遍历方式.
+        (1)第一种.
+             获取key,从而获取value.
+             for key in dic:
+                 print(key,dic(key))
+        (2)第二种.
+             直接获取所有的key,value键值对.
+             for key,value in dic.items():
+                 print(key,value)
+     4.常用操作.
+        (1).获取所有的键.
+             dic.keys()      #获取的数据结构是dict_keys,不是列表,如果需要转成列表,可以用list()
+        (2).获取所有的value.
+             dic.values()   #获取的数据结构是dict_values,不是列表,如果需要转成列表,可以用list()
+        (3).获取所有的键值对.
+             dic.items()    #获取的数据结构是dict_items,不是列表,如果需要转成列表,可以用list()
+        (4).增加和更新元素.
+             直接 dic['c']=3
+             如果没有'c'这个key ,就会新增'c':3
+             否则会更新key的值.
+        (5)获取某一个key的value,
+           get(), 该函数的优点是如果存在key则返回对应的value,不存在也不会报错.
+           使用:
+               get(key,如果不存在返回的默认值)
+                   例:get('s',0)   则返回0
+               同时,也可以只传入一个参数,如get('s'),此时如果存在返回对应value,否则返回None.
+        (6)update()函数.
+            举例:
+               a={1:1,2:2,3:4}
+               b={3:3,4:4,5:5}
+               a.update(b)       #用括号里的字典去更新调用对象的字典,
+                                         如果有相同key,更新value,
+                                         如果有多的key,则直接将多的key,value添加进去
+               a-->{1: 1, 2: 2, 3: 3, 4: 4, 5: 5}
+   
+      小案例.有一个dict,存储了学生的姓名和成绩.将其按成绩降序排序.
+          score={'李白':88,'韩信':99,'张飞':60,'不知火舞':30,'嬴政':100}
+          help=list(zip(score.values(),score.keys()))    #zip方法的作用是将传入的列表一一对应的取出来变成一个元组.
+          help=list({score[i]:i for i in score}.items())    #也可以用这种方法,二选一即可.
+          help.sort(reverse=True)    #对元组进行排序,其原理是对于每一组元素,依次从前往后进行比较,直到有结果.
+                                                   比如:(2,"a")>(1,"a")
+
+ 
+          (7)字典推导式.
+              格式:{...for ... in... if}
+              功能很强大,下面举几个小例子.
+                  以score={'李白':88,'韩信':99,'张飞':60,'不知火舞':30,'嬴政':100}为例:
+                      1.筛选出不及格的同学.
+                         {i:score[i] for i in score if score[i]<60}
+                      2.将所有的key,value交换顺序.
+                         {score[i]:i for i in score}
+                      3.也可以直接将元组或者列表变成字典.
+                         {i:i*2 for i in list}
+     
+
+
+综合案例:计算每个单词出现的次数
+text='''IDLE has two main window types, the Shell window and the Editor window.  It is possible to have multiple editor windows simultaneously.  On Windows and Linux, each has its own top menu.  Each menu documented below indicates which window type it is associated with. 
+Output windows, such as used for Edit => Find in Files, are a subtype of editor window.They currently have the same top menu but a different default title and context menu. 
+On macOS, there is one application menu.  It dynamically changes according to the window currently selected.  It has an IDLE menu, and some entries described below are moved around to conform to Apple guidelines.  '''
+
+line=text.strip().split('\n')    #strip()去除首尾的空格
+dic={}
+for li in line:
+    temp=li.replace(',',' ').replace('.',' ').replace('=>',' ').strip().split(' ')    #将每一句按空格分割成列表
+        for word in temp:    
+            if word==' ':                          #不计算空格
+                continues
+            dic[word]=dic.get(word,0)+1   #新增键值对或者更新次数
+help=list(zip(dic.values(),dic.keys()))
+help.sort(reverse=True)
+for i in help:
+    print('{}:{}'.format(i[1],i[0]))
+     

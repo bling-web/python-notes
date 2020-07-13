@@ -1,0 +1,53 @@
+一.if.
+    >>> if 5>3 :
+    ...     print('yes')
+    ... else:
+    ...     print('no')
+    ...
+    yes
+    不需要括号,后面跟冒号,用严格的缩进来表示层级关系.
+
+    此外,如果有多个if else 嵌套,可以用elif代替if else.
+
+二.for
+     1.for i in range(2,10):  i 表示下标.
+       这种循环很恶心,i不能变,只能依次向后走,垃圾.
+     2.list=['a','b']
+        for i in list:   i表示其中具体的元素.
+  
+    举例:简单找出字符串中是否存在相同字符.
+        str="don't panic"
+        for i in range(0,len(str)-1):
+        for j in range(i+1,len(str)):
+                if(str[j]==str[i]):
+                        print("存在相同字符{},他们的下标分别是{}和{}".format(str[j],i,j))
+
+        输出为:存在相同字符n,他们的下标分别是2和8
+    3.既循环元素,也可以显示下标.
+       for index,i in enumerate(list):      #i表示当前元素,index表示当前元素的下标.
+              
+       
+     
+
+
+
+三.while
+    计算1到100的和.
+    x=1
+    total=0
+    while x< 100 :
+        total += x
+        x += 1
+   print(x)
+   
+   在python中有个特别的点就是在while中也可以使用else,作用就是当不满足条件的时候执行一次.
+       while x< 100 :
+           total += x
+           x += 1
+       else:
+           print(total)
+       
+ 
+
+     
+

@@ -1,0 +1,39 @@
+
+一.知识储备.
+    python操作excel的三个工具包如下，注意，只能操作.xls，不能操作.xlsx。
+      xlrd: 对excel进行读相关操作
+      xlwt: 对excel进行写相关操作
+      xlutils: 对excel读写操作的整合,其实就是将原有得读取得内容复制,并构建一个新的xlwt对象
+   
+    xlwt的缺陷
+      xlwt只能创建一个全新的excel文件,然后对这个文件进行写入内容以及保存。但是大多数情况下我们
+    希望的是读入一个excel文件，然后进行修改或追加，这个时候就需要xlutils了。
+     使用xlutils的博客:https://blog.csdn.net/qq_30242609/article/details/68953172
+
+
+二.xlwt使用举例.
+    #构建一个workbook文件对象,也就是excel文件对象
+    workbook= xlwt.Workbook(encoding='utf-8')
+    #创建工作表对象,也就是worksheet,
+    sheet = workbook.add_sheet('sheet1')
+    #写入数据,第一个是横坐标,第二个是总坐标,第三个是写入的内容
+    # sheet.write(0,0,'hello')
+    #保存数据,不保存的话是在内存中,参数就是文件名称
+    # workbook.save('test.xls')
+
+
+    # 小例子,写入99乘法表
+    workbook= xlwt.Workbook(encoding='utf-8',style_compression=1)  #style_compression=0是只能在新文件中写内容,=1会覆盖原有内容，写入新的内容
+    #创建工作表对象,也就是worksheet,
+    sheet = workbook.add_sheet('sheet1')
+    #写入数据,第一个是横坐标,第二个是总坐标,第三个是写入的内容
+    for i in range(1,10):
+        for j in range(1,i+1):
+            # print(i,j)
+            sheet.write(i-1,j-1,'{}*{}={}'.format(i,j,i*j))
+    workbook.save('mul.xls')
+
+
+
+
+如果要操作xlsx,可以参考这个博客.https://blog.csdn.net/sinat_28576553/article/details/81275650

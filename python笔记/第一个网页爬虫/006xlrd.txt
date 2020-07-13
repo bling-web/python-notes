@@ -1,0 +1,51 @@
+
+
+     xlrd是一个专门读取excel文件对象的第三方jar包.
+
+
+一.导入jar包
+    from xlrd import open_workbook
+
+二.具体操作
+    1.进行读取
+      workbook = open_workbook(r"E:\javaPrograming\data\爬取公司和网址.xlsx")    #用xlrd提供的方法读取一个excel文件,返回一个excel文件对象
+      sheets = workbook.sheets()     #返回一个集合,里面存储了具体的工作表对象,也就是该excel文件中工作表的集合
+    
+    2.获取所有工作表的名称
+       names = workbook.sheet_names()
+       print(names)
+
+    3.根据表名称获取指定的工作表
+       table = workbook.sheet_by_name("Sheet1")
+
+    4.获取工作表的行,列,和名称
+       rows = sheets[0].nrows           #返回第一个工作表对象的现有的行数
+       cols=sheets[0].ncols
+       name = sheets[0].name
+
+    5.获取单元格内容的三种方式,cell就是单元格的意思
+       print(table.cell(1,0).value)
+       print(table.row(1)[0].value)     #这个是先获取第一行所有的内容,再获取某一列的值
+       print(table.cell_value(2,0))
+
+    6.获取单元格内容的类型
+       print(table.cell(1,1).ctype)
+       这里要说一下xlrd和python数据类型的对应关系
+       0--->empty
+       1--->string
+       2--->number
+       3--->date
+       4--->boolean
+       5--->error
+
+       所以也就是如果excel是string类型,输出就是1.
+       如果是日期会自动变成一段数字,那么就需要进行转换,可以参考这个博客.https://www.cnblogs.com/ilovepython/p/11068841.html
+
+
+       
+
+
+
+
+
+

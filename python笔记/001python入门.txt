@@ -1,0 +1,43 @@
+一.软件安装.
+   1.下载
+      打开官网www.python.org,download下载最新的安装包.下载后安装即可.
+      安装时记得勾选add python to path(加入到环境变量中)
+   2.验证是否安装成功.
+     cmd-->输入python 看是否输出对应版本
+   3.直接打开编译器.
+      开始,直接输入IDLE.
+   4.带有提示的编译器.
+      subtime,直接搜索下载,安装即可.
+
+
+二.输出语句print.
+    1.直接输出.
+          print('hello','world',sep = '*',end = '\n'）
+          结果为  hello*world   （end默认就是换行,sep是连接符）
+
+          输出语句中有单引号，外面不能用单引号，有双引号，外面不能用双引号，如果都有，用三个单引号(可跨行输入)或单个双引号输出，其他单引号和双引号暂时认为无区别
+
+          转义字符(\)忽视下一个字符特殊的意思，显示原有的意思
+          print('\\n') 结果为\n
+          print("\\\n")结果为\
+         大写R或小写r都表示忽视全部特殊意思，显示原有字符
+         print(r"\\\n")结果为\\\n
+  
+    2.%格式化字符串
+     用后面的替换前面的，
+       s:将后面代替的转为字符串进行输出，
+          'hello %s'%('world')结果为hello world
+          print("hello %s"%(2.2)) 结果为 hello 2.2
+       d:将后面代替的转为用整数代替
+           print("hello %d"%(2.2))结果为 hello 2
+           print("hello %d"%("s")) 报错,typeError
+       f: 将后面代替的转为用小数代替
+          print("hello %f"%(2)) 结果为hello 2.000000
+
+    3.format格式化字符串
+      用后面的代替前面的，不区分类型，也可更改顺序
+          'hello {} {}'.format('liang','python')结果为'hello liang python'
+          'hello {1} {0}'.format('liang','python')结果为'hello python liang'
+          'i am {name},i am {age} years old'.format(name = 'liang',age = '10')
+
+   

@@ -1,0 +1,55 @@
+一.准备工作.
+    爬虫其实就是获取网页中的数据,然后根据网页的规律,筛选出我们想要的数据.
+    所以当想要爬某一个网站时,要先打开对应的网站找一下规律.
+    1.如何找到页面上的某一个元素?
+       打开开发者模式,点击最左边的那个小箭头,选中想要的元素即可
+     
+       注意:下面有一行标签非常的有用,显示了当前元素的层级结构.根据这样的结构就可以快速的锁定位置.
+
+    2.还有一个最常用的元素network,里面的header就是每一次请求发送给服务器的,
+      服务器通过这些来判断你的身份,登录后的身份等等.
+      
+      注意:在header里的response Headers也是浏览器发送给服务端的,告诉浏览器返回什么样的数据
+
+二.编程规范.
+    1.直接在程序第一行写上coding='utf-8'
+
+
+三.导包原理.
+    其实就是调用别人写好的代码.
+    比如:
+          自己定义了个包test,里面又有t1的文件.在ti里面有一些函数.
+          现在我们在别处想用t1里面的函数,就可以这样写:
+             from test import t1
+     
+
+四.新建douban project
+    新建一个spider python文件.
+    导入以下包. 
+    from bs4 import BeautifulSoup    #网页解析,获取数据
+    import re      #正则表达式
+    import urllib.request,urllib.error  #定制url,获取网页数据
+    import xlwt    #进行excel操作
+    import sqlite3 #进行数据库操作    
+
+
+
+
+一.获取网页原代码.
+    1.最简单的三行程序.
+        import requests
+        html=requests.get("https://blog.csdn.net")
+        html.text
+    2.有时候网页原代码不能直接爬取,这个时候就需要伪装,也就是加一个user-agent
+       user-agent在哪里获取?
+           访问一个网页,点开检查,然后打开network,在Requests.Header里面就有user-agent,复制过来即可.
+       举例:
+           header={'User-Agent':"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.138 Safari/537.36"}
+           html=requests.get('https://blog.csdn.net',headers=header)
+           html.encoding='utf-8'
+           print(html.text)
+  
+
+增加新的包
+   set-->project-->project Interpreter(解释器)-->右边的+号-->搜索相应的包-->install
+       
